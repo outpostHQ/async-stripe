@@ -687,7 +687,8 @@
           "enabled": true
         },
         "payment_method_update": {
-          "enabled": false
+          "enabled": false,
+          "payment_method_configuration": null
         },
         "subscription_cancel": {
           "cancellation_reason": {
@@ -1745,6 +1746,10 @@
       "refunds": [
         {
           "amount_refunded": 1387154914,
+          "payment_record_refund": {
+            "payment_record": "payment_record",
+            "refund_group": "refund_group"
+          },
           "refund": {
             "amount": 1413853096,
             "balance_transaction": null,
@@ -1760,7 +1765,8 @@
             "source_transfer_reversal": null,
             "status": null,
             "transfer_reversal": null
-          }
+          },
+          "type": null
         }
       ],
       "shipping_cost": {
@@ -1898,6 +1904,23 @@
       "components": {
         "buy_button": {
           "enabled": false
+        },
+        "customer_sheet": {
+          "enabled": true,
+          "features": {
+            "payment_method_allow_redisplay_filters": null,
+            "payment_method_remove": null
+          }
+        },
+        "mobile_payment_element": {
+          "enabled": true,
+          "features": {
+            "payment_method_allow_redisplay_filters": null,
+            "payment_method_redisplay": null,
+            "payment_method_remove": null,
+            "payment_method_save": null,
+            "payment_method_save_allow_redisplay_override": null
+          }
         },
         "payment_element": {
           "enabled": false,
@@ -2366,6 +2389,7 @@
         "customer": "cus_QXg1o8vcGmoR32",
         "type": "customer"
       },
+      "account_numbers": null,
       "balance": {
         "as_of": 93102340,
         "current": {
@@ -2942,6 +2966,10 @@
         "exp_year": 2030,
         "id": "ic_1Pgag5B7WZ01zgkWephORn8N",
         "last4": "4242",
+        "latest_fraud_warning": {
+          "started_at": null,
+          "type": null
+        },
         "livemode": false,
         "metadata": {},
         "object": "issuing.card",
@@ -3162,6 +3190,10 @@
       "exp_year": 2030,
       "id": "ic_1Pgag5B7WZ01zgkWephORn8N",
       "last4": "4242",
+      "latest_fraud_warning": {
+        "started_at": null,
+        "type": null
+      },
       "livemode": false,
       "metadata": {},
       "object": "issuing.card",
@@ -3541,6 +3573,86 @@
       "status": "active",
       "type": "multi_use"
     },
+    "payment_attempt_record": {
+      "amount": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_authorized": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_canceled": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_failed": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_guaranteed": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_refunded": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_requested": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "application": null,
+      "created": 1028554472,
+      "customer_details": {
+        "customer": null,
+        "email": null,
+        "name": null,
+        "phone": null
+      },
+      "customer_presence": null,
+      "description": null,
+      "id": "obj_123",
+      "livemode": true,
+      "metadata": {
+        "key": "metadata"
+      },
+      "object": "payment_attempt_record",
+      "payment_method_details": {
+        "billing_details": {
+          "address": {
+            "city": null,
+            "country": null,
+            "line1": null,
+            "line2": null,
+            "postal_code": null,
+            "state": null
+          },
+          "email": null,
+          "name": null,
+          "phone": null
+        },
+        "payment_method": null,
+        "type": "type"
+      },
+      "payment_record": null,
+      "processor_details": {
+        "type": "custom"
+      },
+      "reported_by": "stripe",
+      "shipping_details": {
+        "address": {
+          "city": null,
+          "country": null,
+          "line1": null,
+          "line2": null,
+          "postal_code": null,
+          "state": null
+        },
+        "name": null,
+        "phone": null
+      }
+    },
     "payment_intent": {
       "amount": 1099,
       "amount_capturable": 0,
@@ -3602,6 +3714,20 @@
         }
       },
       "transfer_group": null
+    },
+    "payment_intent_amount_details_line_item": {
+      "discount_amount": null,
+      "id": "obj_123",
+      "object": "payment_intent_amount_details_line_item",
+      "payment_method_options": {},
+      "product_code": null,
+      "product_name": "product_name",
+      "quantity": 1285004149,
+      "tax": {
+        "total_tax_amount": 1109208903
+      },
+      "unit_cost": 472784472,
+      "unit_of_measure": null
     },
     "payment_link": {
       "active": true,
@@ -4032,6 +4158,85 @@
       "object": "payment_method_domain",
       "paypal": {
         "status": "active"
+      }
+    },
+    "payment_record": {
+      "amount": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_authorized": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_canceled": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_failed": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_guaranteed": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_refunded": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "amount_requested": {
+        "currency": "usd",
+        "value": 111972721
+      },
+      "application": null,
+      "created": 1028554472,
+      "customer_details": {
+        "customer": null,
+        "email": null,
+        "name": null,
+        "phone": null
+      },
+      "customer_presence": null,
+      "description": null,
+      "id": "obj_123",
+      "latest_payment_attempt_record": null,
+      "livemode": true,
+      "metadata": {
+        "key": "metadata"
+      },
+      "object": "payment_record",
+      "payment_method_details": {
+        "billing_details": {
+          "address": {
+            "city": null,
+            "country": null,
+            "line1": null,
+            "line2": null,
+            "postal_code": null,
+            "state": null
+          },
+          "email": null,
+          "name": null,
+          "phone": null
+        },
+        "payment_method": null,
+        "type": "type"
+      },
+      "processor_details": {
+        "type": "custom"
+      },
+      "shipping_details": {
+        "address": {
+          "city": null,
+          "country": null,
+          "line1": null,
+          "line2": null,
+          "postal_code": null,
+          "state": null
+        },
+        "name": null,
+        "phone": null
       }
     },
     "payment_source": {
@@ -4698,6 +4903,7 @@
       "created": 1234567890,
       "customer": null,
       "description": null,
+      "excluded_payment_method_types": null,
       "flow_directions": null,
       "id": "seti_1Pgag7B7WZ01zgkWSgwGdb8Z",
       "last_setup_error": {
@@ -5297,6 +5503,13 @@
       "subscription": null,
       "test_clock": null
     },
+    "tax.association": {
+      "calculation": "calculation",
+      "id": "obj_123",
+      "object": "tax.association",
+      "payment_intent": "payment_intent",
+      "tax_transaction_attempts": null
+    },
     "tax.calculation": {
       "amount_total": 1947,
       "currency": "usd",
@@ -5591,6 +5804,18 @@
       "metadata": {},
       "object": "terminal.location"
     },
+    "terminal.onboarding_link": {
+      "link_options": {
+        "apple_terms_and_conditions": {
+          "allow_relinking": null,
+          "merchant_display_name": "merchant_display_name"
+        }
+      },
+      "link_type": "apple_terms_and_conditions",
+      "object": "terminal.onboarding_link",
+      "on_behalf_of": null,
+      "redirect_url": "redirect_url"
+    },
     "terminal.reader": {
       "action": {
         "failure_code": null,
@@ -5603,6 +5828,7 @@
       "id": "tmr_iGOgDOlmFAot3zIp2JzEqXYs",
       "ip_address": "192.168.2.2",
       "label": "Blue Rabbit",
+      "last_seen_at": null,
       "livemode": false,
       "location": null,
       "metadata": {},
@@ -6257,5 +6483,5 @@
       "url": "https://example.com/my/webhook/endpoint"
     }
   },
-  "version": "v2080"
+  "version": "v2121"
 }

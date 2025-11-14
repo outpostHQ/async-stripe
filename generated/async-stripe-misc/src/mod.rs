@@ -1,4 +1,5 @@
 #![recursion_limit = "256"]
+#![deny(clippy::large_stack_frames)]
 #![allow(clippy::large_enum_variant)]
 #![allow(rustdoc::broken_intra_doc_links)]
 #![allow(rustdoc::invalid_html_tags)]
@@ -13,6 +14,10 @@ extern crate self as stripe_misc;
 miniserde::make_place!(Place);
 pub use apple_pay_domain::types::*;
 pub mod apple_pay_domain;
+#[doc(hidden)]
+pub mod bank_connections_resource_account_number_details;
+#[doc(inline)]
+pub use bank_connections_resource_account_number_details::*;
 #[doc(hidden)]
 pub mod bank_connections_resource_accountholder;
 #[doc(inline)]
@@ -253,6 +258,8 @@ pub mod scheduled_query_run;
 pub mod sigma_scheduled_query_run_error;
 #[doc(inline)]
 pub use sigma_scheduled_query_run_error::*;
+pub use tax_association::types::*;
+pub mod tax_association;
 pub use tax_calculation::types::*;
 pub mod tax_calculation;
 #[doc(hidden)]
@@ -357,6 +364,18 @@ pub use tax_product_resource_postal_address::*;
 pub mod tax_product_resource_ship_from_details;
 #[doc(inline)]
 pub use tax_product_resource_ship_from_details::*;
+#[doc(hidden)]
+pub mod tax_product_resource_tax_association_transaction_attempts;
+#[doc(inline)]
+pub use tax_product_resource_tax_association_transaction_attempts::*;
+#[doc(hidden)]
+pub mod tax_product_resource_tax_association_transaction_attempts_resource_committed;
+#[doc(inline)]
+pub use tax_product_resource_tax_association_transaction_attempts_resource_committed::*;
+#[doc(hidden)]
+pub mod tax_product_resource_tax_association_transaction_attempts_resource_errored;
+#[doc(inline)]
+pub use tax_product_resource_tax_association_transaction_attempts_resource_errored::*;
 #[doc(hidden)]
 pub mod tax_product_resource_tax_breakdown;
 #[doc(inline)]

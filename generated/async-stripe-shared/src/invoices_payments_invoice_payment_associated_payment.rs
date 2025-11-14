@@ -8,6 +8,8 @@ pub struct InvoicesPaymentsInvoicePaymentAssociatedPayment {
     /// ID of the PaymentIntent associated with this payment when `type` is `payment_intent`.
     /// Note: This property is only populated for invoices finalized on or after March 15th, 2019.
     pub payment_intent: Option<stripe_types::Expandable<stripe_shared::PaymentIntent>>,
+    /// ID of the PaymentRecord associated with this payment when `type` is `payment_record`.
+    pub payment_record: Option<stripe_types::Expandable<stripe_shared::PaymentRecord>>,
     /// Type of payment object associated with this invoice payment.
     #[cfg_attr(any(feature = "deserialize", feature = "serialize"), serde(rename = "type"))]
     pub type_: InvoicesPaymentsInvoicePaymentAssociatedPaymentType,
@@ -16,6 +18,7 @@ pub struct InvoicesPaymentsInvoicePaymentAssociatedPayment {
 pub struct InvoicesPaymentsInvoicePaymentAssociatedPaymentBuilder {
     charge: Option<Option<stripe_types::Expandable<stripe_shared::Charge>>>,
     payment_intent: Option<Option<stripe_types::Expandable<stripe_shared::PaymentIntent>>>,
+    payment_record: Option<Option<stripe_types::Expandable<stripe_shared::PaymentRecord>>>,
     type_: Option<InvoicesPaymentsInvoicePaymentAssociatedPaymentType>,
 }
 
@@ -61,8 +64,8 @@ const _: () = {
             Ok(match k {
                 "charge" => Deserialize::begin(&mut self.charge),
                 "payment_intent" => Deserialize::begin(&mut self.payment_intent),
+                "payment_record" => Deserialize::begin(&mut self.payment_record),
                 "type" => Deserialize::begin(&mut self.type_),
-
                 _ => <dyn Visitor>::ignore(),
             })
         }
@@ -71,17 +74,21 @@ const _: () = {
             Self {
                 charge: Deserialize::default(),
                 payment_intent: Deserialize::default(),
+                payment_record: Deserialize::default(),
                 type_: Deserialize::default(),
             }
         }
 
         fn take_out(&mut self) -> Option<Self::Out> {
-            let (Some(charge), Some(payment_intent), Some(type_)) =
-                (self.charge.take(), self.payment_intent.take(), self.type_)
-            else {
+            let (Some(charge), Some(payment_intent), Some(payment_record), Some(type_)) = (
+                self.charge.take(),
+                self.payment_intent.take(),
+                self.payment_record.take(),
+                self.type_,
+            ) else {
                 return None;
             };
-            Some(Self::Out { charge, payment_intent, type_ })
+            Some(Self::Out { charge, payment_intent, payment_record, type_ })
         }
     }
 
@@ -110,8 +117,8 @@ const _: () = {
                 match k.as_str() {
                     "charge" => b.charge = FromValueOpt::from_value(v),
                     "payment_intent" => b.payment_intent = FromValueOpt::from_value(v),
+                    "payment_record" => b.payment_record = FromValueOpt::from_value(v),
                     "type" => b.type_ = FromValueOpt::from_value(v),
-
                     _ => {}
                 }
             }
@@ -124,6 +131,7 @@ const _: () = {
 pub enum InvoicesPaymentsInvoicePaymentAssociatedPaymentType {
     Charge,
     PaymentIntent,
+    PaymentRecord,
 }
 impl InvoicesPaymentsInvoicePaymentAssociatedPaymentType {
     pub fn as_str(self) -> &'static str {
@@ -131,6 +139,7 @@ impl InvoicesPaymentsInvoicePaymentAssociatedPaymentType {
         match self {
             Charge => "charge",
             PaymentIntent => "payment_intent",
+            PaymentRecord => "payment_record",
         }
     }
 }
@@ -142,6 +151,7 @@ impl std::str::FromStr for InvoicesPaymentsInvoicePaymentAssociatedPaymentType {
         match s {
             "charge" => Ok(Charge),
             "payment_intent" => Ok(PaymentIntent),
+            "payment_record" => Ok(PaymentRecord),
             _ => Err(stripe_types::StripeParseError),
         }
     }

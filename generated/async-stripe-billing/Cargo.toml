@@ -20,10 +20,10 @@ serde.workspace = true
 serde_json = { workspace = true, optional = true }
 smol_str.workspace = true
 miniserde.workspace = true
-async-stripe-types = {path = "../../async-stripe-types", version = "1.0.0-alpha.4" }
-async-stripe-client-core = {path = "../../async-stripe-client-core", version = "1.0.0-alpha.4" }
+async-stripe-types = {path = "../../async-stripe-types", version = "1.0.0-alpha.7" }
+async-stripe-client-core = {path = "../../async-stripe-client-core", version = "1.0.0-alpha.7" }
 
-async-stripe-shared = {path = "../../generated/async-stripe-shared", version = "1.0.0-alpha.4" }
+async-stripe-shared = {path = "../../generated/async-stripe-shared", version = "1.0.0-alpha.7" }
 
 
 [features]
@@ -46,6 +46,7 @@ invoice_item = []
 invoice_line_item = []
 invoice_payment = []
 invoice_rendering_template = []
+payment_record = []
 plan = []
 quote = []
 subscription = []
@@ -71,6 +72,7 @@ full = ["billing_alert",
 "invoice_line_item",
 "invoice_payment",
 "invoice_rendering_template",
+"payment_record",
 "plan",
 "quote",
 "subscription",

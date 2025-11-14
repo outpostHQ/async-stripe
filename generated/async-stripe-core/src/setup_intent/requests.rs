@@ -214,6 +214,9 @@ struct CreateSetupIntentBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     description: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    excluded_payment_method_types:
+        Option<Vec<stripe_shared::SetupIntentExcludedPaymentMethodTypes>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     flow_directions: Option<Vec<stripe_shared::SetupIntentFlowDirections>>,
@@ -251,6 +254,7 @@ impl CreateSetupIntentBuilder {
             confirmation_token: None,
             customer: None,
             description: None,
+            excluded_payment_method_types: None,
             expand: None,
             flow_directions: None,
             mandate_data: None,
@@ -1191,6 +1195,7 @@ pub enum CreateSetupIntentPaymentMethodDataIdealBank {
     AsnBank,
     Bunq,
     Buut,
+    Finom,
     Handelsbanken,
     Ing,
     Knab,
@@ -1215,6 +1220,7 @@ impl CreateSetupIntentPaymentMethodDataIdealBank {
             AsnBank => "asn_bank",
             Bunq => "bunq",
             Buut => "buut",
+            Finom => "finom",
             Handelsbanken => "handelsbanken",
             Ing => "ing",
             Knab => "knab",
@@ -1242,6 +1248,7 @@ impl std::str::FromStr for CreateSetupIntentPaymentMethodDataIdealBank {
             "asn_bank" => Ok(AsnBank),
             "bunq" => Ok(Bunq),
             "buut" => Ok(Buut),
+            "finom" => Ok(Finom),
             "handelsbanken" => Ok(Handelsbanken),
             "ing" => Ok(Ing),
             "knab" => Ok(Knab),
@@ -4345,6 +4352,16 @@ impl CreateSetupIntent {
         self.inner.description = Some(description.into());
         self
     }
+    /// The list of payment method types to exclude from use with this SetupIntent.
+    pub fn excluded_payment_method_types(
+        mut self,
+        excluded_payment_method_types: impl Into<
+            Vec<stripe_shared::SetupIntentExcludedPaymentMethodTypes>,
+        >,
+    ) -> Self {
+        self.inner.excluded_payment_method_types = Some(excluded_payment_method_types.into());
+        self
+    }
     /// Specifies which fields in the response should be expanded.
     pub fn expand(mut self, expand: impl Into<Vec<String>>) -> Self {
         self.inner.expand = Some(expand.into());
@@ -4486,6 +4503,9 @@ struct UpdateSetupIntentBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     description: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    excluded_payment_method_types:
+        Option<Vec<stripe_shared::SetupIntentExcludedPaymentMethodTypes>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     flow_directions: Option<Vec<stripe_shared::SetupIntentFlowDirections>>,
@@ -4508,6 +4528,7 @@ impl UpdateSetupIntentBuilder {
             attach_to_self: None,
             customer: None,
             description: None,
+            excluded_payment_method_types: None,
             expand: None,
             flow_directions: None,
             metadata: None,
@@ -5268,6 +5289,7 @@ pub enum UpdateSetupIntentPaymentMethodDataIdealBank {
     AsnBank,
     Bunq,
     Buut,
+    Finom,
     Handelsbanken,
     Ing,
     Knab,
@@ -5292,6 +5314,7 @@ impl UpdateSetupIntentPaymentMethodDataIdealBank {
             AsnBank => "asn_bank",
             Bunq => "bunq",
             Buut => "buut",
+            Finom => "finom",
             Handelsbanken => "handelsbanken",
             Ing => "ing",
             Knab => "knab",
@@ -5319,6 +5342,7 @@ impl std::str::FromStr for UpdateSetupIntentPaymentMethodDataIdealBank {
             "asn_bank" => Ok(AsnBank),
             "bunq" => Ok(Bunq),
             "buut" => Ok(Buut),
+            "finom" => Ok(Finom),
             "handelsbanken" => Ok(Handelsbanken),
             "ing" => Ok(Ing),
             "knab" => Ok(Knab),
@@ -8323,6 +8347,16 @@ impl UpdateSetupIntent {
         self.inner.description = Some(description.into());
         self
     }
+    /// The list of payment method types to exclude from use with this SetupIntent.
+    pub fn excluded_payment_method_types(
+        mut self,
+        excluded_payment_method_types: impl Into<
+            Vec<stripe_shared::SetupIntentExcludedPaymentMethodTypes>,
+        >,
+    ) -> Self {
+        self.inner.excluded_payment_method_types = Some(excluded_payment_method_types.into());
+        self
+    }
     /// Specifies which fields in the response should be expanded.
     pub fn expand(mut self, expand: impl Into<Vec<String>>) -> Self {
         self.inner.expand = Some(expand.into());
@@ -9475,6 +9509,7 @@ pub enum ConfirmSetupIntentPaymentMethodDataIdealBank {
     AsnBank,
     Bunq,
     Buut,
+    Finom,
     Handelsbanken,
     Ing,
     Knab,
@@ -9499,6 +9534,7 @@ impl ConfirmSetupIntentPaymentMethodDataIdealBank {
             AsnBank => "asn_bank",
             Bunq => "bunq",
             Buut => "buut",
+            Finom => "finom",
             Handelsbanken => "handelsbanken",
             Ing => "ing",
             Knab => "knab",
@@ -9526,6 +9562,7 @@ impl std::str::FromStr for ConfirmSetupIntentPaymentMethodDataIdealBank {
             "asn_bank" => Ok(AsnBank),
             "bunq" => Ok(Bunq),
             "buut" => Ok(Buut),
+            "finom" => Ok(Finom),
             "handelsbanken" => Ok(Handelsbanken),
             "ing" => Ok(Ing),
             "knab" => Ok(Knab),

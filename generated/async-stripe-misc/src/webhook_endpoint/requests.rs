@@ -231,6 +231,7 @@ pub enum CreateWebhookEndpointEnabledEvents {
     ApplicationFeeRefundUpdated,
     ApplicationFeeRefunded,
     BalanceAvailable,
+    BalanceSettingsUpdated,
     BillingAlertTriggered,
     BillingPortalConfigurationCreated,
     BillingPortalConfigurationUpdated,
@@ -291,6 +292,7 @@ pub enum CreateWebhookEndpointEnabledEvents {
     CustomerCashBalanceTransactionCreated,
     EntitlementsActiveEntitlementSummaryUpdated,
     FileCreated,
+    FinancialConnectionsAccountAccountNumbersUpdated,
     FinancialConnectionsAccountCreated,
     FinancialConnectionsAccountDeactivated,
     FinancialConnectionsAccountDisconnected,
@@ -298,6 +300,7 @@ pub enum CreateWebhookEndpointEnabledEvents {
     FinancialConnectionsAccountRefreshedBalance,
     FinancialConnectionsAccountRefreshedOwnership,
     FinancialConnectionsAccountRefreshedTransactions,
+    FinancialConnectionsAccountUpcomingAccountNumberExpiry,
     IdentityVerificationSessionCanceled,
     IdentityVerificationSessionCreated,
     IdentityVerificationSessionProcessing,
@@ -313,6 +316,7 @@ pub enum CreateWebhookEndpointEnabledEvents {
     InvoiceOverpaid,
     InvoicePaid,
     InvoicePaymentActionRequired,
+    InvoicePaymentAttemptRequired,
     InvoicePaymentFailed,
     InvoicePaymentSucceeded,
     InvoiceSent,
@@ -481,6 +485,7 @@ impl CreateWebhookEndpointEnabledEvents {
             ApplicationFeeRefundUpdated => "application_fee.refund.updated",
             ApplicationFeeRefunded => "application_fee.refunded",
             BalanceAvailable => "balance.available",
+            BalanceSettingsUpdated => "balance_settings.updated",
             BillingAlertTriggered => "billing.alert.triggered",
             BillingPortalConfigurationCreated => "billing_portal.configuration.created",
             BillingPortalConfigurationUpdated => "billing_portal.configuration.updated",
@@ -547,6 +552,9 @@ impl CreateWebhookEndpointEnabledEvents {
                 "entitlements.active_entitlement_summary.updated"
             }
             FileCreated => "file.created",
+            FinancialConnectionsAccountAccountNumbersUpdated => {
+                "financial_connections.account.account_numbers_updated"
+            }
             FinancialConnectionsAccountCreated => "financial_connections.account.created",
             FinancialConnectionsAccountDeactivated => "financial_connections.account.deactivated",
             FinancialConnectionsAccountDisconnected => "financial_connections.account.disconnected",
@@ -559,6 +567,9 @@ impl CreateWebhookEndpointEnabledEvents {
             }
             FinancialConnectionsAccountRefreshedTransactions => {
                 "financial_connections.account.refreshed_transactions"
+            }
+            FinancialConnectionsAccountUpcomingAccountNumberExpiry => {
+                "financial_connections.account.upcoming_account_number_expiry"
             }
             IdentityVerificationSessionCanceled => "identity.verification_session.canceled",
             IdentityVerificationSessionCreated => "identity.verification_session.created",
@@ -577,6 +588,7 @@ impl CreateWebhookEndpointEnabledEvents {
             InvoiceOverpaid => "invoice.overpaid",
             InvoicePaid => "invoice.paid",
             InvoicePaymentActionRequired => "invoice.payment_action_required",
+            InvoicePaymentAttemptRequired => "invoice.payment_attempt_required",
             InvoicePaymentFailed => "invoice.payment_failed",
             InvoicePaymentSucceeded => "invoice.payment_succeeded",
             InvoiceSent => "invoice.sent",
@@ -762,6 +774,7 @@ impl std::str::FromStr for CreateWebhookEndpointEnabledEvents {
             "application_fee.refund.updated" => Ok(ApplicationFeeRefundUpdated),
             "application_fee.refunded" => Ok(ApplicationFeeRefunded),
             "balance.available" => Ok(BalanceAvailable),
+            "balance_settings.updated" => Ok(BalanceSettingsUpdated),
             "billing.alert.triggered" => Ok(BillingAlertTriggered),
             "billing_portal.configuration.created" => Ok(BillingPortalConfigurationCreated),
             "billing_portal.configuration.updated" => Ok(BillingPortalConfigurationUpdated),
@@ -830,6 +843,9 @@ impl std::str::FromStr for CreateWebhookEndpointEnabledEvents {
                 Ok(EntitlementsActiveEntitlementSummaryUpdated)
             }
             "file.created" => Ok(FileCreated),
+            "financial_connections.account.account_numbers_updated" => {
+                Ok(FinancialConnectionsAccountAccountNumbersUpdated)
+            }
             "financial_connections.account.created" => Ok(FinancialConnectionsAccountCreated),
             "financial_connections.account.deactivated" => {
                 Ok(FinancialConnectionsAccountDeactivated)
@@ -849,6 +865,9 @@ impl std::str::FromStr for CreateWebhookEndpointEnabledEvents {
             "financial_connections.account.refreshed_transactions" => {
                 Ok(FinancialConnectionsAccountRefreshedTransactions)
             }
+            "financial_connections.account.upcoming_account_number_expiry" => {
+                Ok(FinancialConnectionsAccountUpcomingAccountNumberExpiry)
+            }
             "identity.verification_session.canceled" => Ok(IdentityVerificationSessionCanceled),
             "identity.verification_session.created" => Ok(IdentityVerificationSessionCreated),
             "identity.verification_session.processing" => Ok(IdentityVerificationSessionProcessing),
@@ -866,6 +885,7 @@ impl std::str::FromStr for CreateWebhookEndpointEnabledEvents {
             "invoice.overpaid" => Ok(InvoiceOverpaid),
             "invoice.paid" => Ok(InvoicePaid),
             "invoice.payment_action_required" => Ok(InvoicePaymentActionRequired),
+            "invoice.payment_attempt_required" => Ok(InvoicePaymentAttemptRequired),
             "invoice.payment_failed" => Ok(InvoicePaymentFailed),
             "invoice.payment_succeeded" => Ok(InvoicePaymentSucceeded),
             "invoice.sent" => Ok(InvoiceSent),
@@ -1180,6 +1200,7 @@ pub enum UpdateWebhookEndpointEnabledEvents {
     ApplicationFeeRefundUpdated,
     ApplicationFeeRefunded,
     BalanceAvailable,
+    BalanceSettingsUpdated,
     BillingAlertTriggered,
     BillingPortalConfigurationCreated,
     BillingPortalConfigurationUpdated,
@@ -1240,6 +1261,7 @@ pub enum UpdateWebhookEndpointEnabledEvents {
     CustomerCashBalanceTransactionCreated,
     EntitlementsActiveEntitlementSummaryUpdated,
     FileCreated,
+    FinancialConnectionsAccountAccountNumbersUpdated,
     FinancialConnectionsAccountCreated,
     FinancialConnectionsAccountDeactivated,
     FinancialConnectionsAccountDisconnected,
@@ -1247,6 +1269,7 @@ pub enum UpdateWebhookEndpointEnabledEvents {
     FinancialConnectionsAccountRefreshedBalance,
     FinancialConnectionsAccountRefreshedOwnership,
     FinancialConnectionsAccountRefreshedTransactions,
+    FinancialConnectionsAccountUpcomingAccountNumberExpiry,
     IdentityVerificationSessionCanceled,
     IdentityVerificationSessionCreated,
     IdentityVerificationSessionProcessing,
@@ -1262,6 +1285,7 @@ pub enum UpdateWebhookEndpointEnabledEvents {
     InvoiceOverpaid,
     InvoicePaid,
     InvoicePaymentActionRequired,
+    InvoicePaymentAttemptRequired,
     InvoicePaymentFailed,
     InvoicePaymentSucceeded,
     InvoiceSent,
@@ -1430,6 +1454,7 @@ impl UpdateWebhookEndpointEnabledEvents {
             ApplicationFeeRefundUpdated => "application_fee.refund.updated",
             ApplicationFeeRefunded => "application_fee.refunded",
             BalanceAvailable => "balance.available",
+            BalanceSettingsUpdated => "balance_settings.updated",
             BillingAlertTriggered => "billing.alert.triggered",
             BillingPortalConfigurationCreated => "billing_portal.configuration.created",
             BillingPortalConfigurationUpdated => "billing_portal.configuration.updated",
@@ -1496,6 +1521,9 @@ impl UpdateWebhookEndpointEnabledEvents {
                 "entitlements.active_entitlement_summary.updated"
             }
             FileCreated => "file.created",
+            FinancialConnectionsAccountAccountNumbersUpdated => {
+                "financial_connections.account.account_numbers_updated"
+            }
             FinancialConnectionsAccountCreated => "financial_connections.account.created",
             FinancialConnectionsAccountDeactivated => "financial_connections.account.deactivated",
             FinancialConnectionsAccountDisconnected => "financial_connections.account.disconnected",
@@ -1508,6 +1536,9 @@ impl UpdateWebhookEndpointEnabledEvents {
             }
             FinancialConnectionsAccountRefreshedTransactions => {
                 "financial_connections.account.refreshed_transactions"
+            }
+            FinancialConnectionsAccountUpcomingAccountNumberExpiry => {
+                "financial_connections.account.upcoming_account_number_expiry"
             }
             IdentityVerificationSessionCanceled => "identity.verification_session.canceled",
             IdentityVerificationSessionCreated => "identity.verification_session.created",
@@ -1526,6 +1557,7 @@ impl UpdateWebhookEndpointEnabledEvents {
             InvoiceOverpaid => "invoice.overpaid",
             InvoicePaid => "invoice.paid",
             InvoicePaymentActionRequired => "invoice.payment_action_required",
+            InvoicePaymentAttemptRequired => "invoice.payment_attempt_required",
             InvoicePaymentFailed => "invoice.payment_failed",
             InvoicePaymentSucceeded => "invoice.payment_succeeded",
             InvoiceSent => "invoice.sent",
@@ -1711,6 +1743,7 @@ impl std::str::FromStr for UpdateWebhookEndpointEnabledEvents {
             "application_fee.refund.updated" => Ok(ApplicationFeeRefundUpdated),
             "application_fee.refunded" => Ok(ApplicationFeeRefunded),
             "balance.available" => Ok(BalanceAvailable),
+            "balance_settings.updated" => Ok(BalanceSettingsUpdated),
             "billing.alert.triggered" => Ok(BillingAlertTriggered),
             "billing_portal.configuration.created" => Ok(BillingPortalConfigurationCreated),
             "billing_portal.configuration.updated" => Ok(BillingPortalConfigurationUpdated),
@@ -1779,6 +1812,9 @@ impl std::str::FromStr for UpdateWebhookEndpointEnabledEvents {
                 Ok(EntitlementsActiveEntitlementSummaryUpdated)
             }
             "file.created" => Ok(FileCreated),
+            "financial_connections.account.account_numbers_updated" => {
+                Ok(FinancialConnectionsAccountAccountNumbersUpdated)
+            }
             "financial_connections.account.created" => Ok(FinancialConnectionsAccountCreated),
             "financial_connections.account.deactivated" => {
                 Ok(FinancialConnectionsAccountDeactivated)
@@ -1798,6 +1834,9 @@ impl std::str::FromStr for UpdateWebhookEndpointEnabledEvents {
             "financial_connections.account.refreshed_transactions" => {
                 Ok(FinancialConnectionsAccountRefreshedTransactions)
             }
+            "financial_connections.account.upcoming_account_number_expiry" => {
+                Ok(FinancialConnectionsAccountUpcomingAccountNumberExpiry)
+            }
             "identity.verification_session.canceled" => Ok(IdentityVerificationSessionCanceled),
             "identity.verification_session.created" => Ok(IdentityVerificationSessionCreated),
             "identity.verification_session.processing" => Ok(IdentityVerificationSessionProcessing),
@@ -1815,6 +1854,7 @@ impl std::str::FromStr for UpdateWebhookEndpointEnabledEvents {
             "invoice.overpaid" => Ok(InvoiceOverpaid),
             "invoice.paid" => Ok(InvoicePaid),
             "invoice.payment_action_required" => Ok(InvoicePaymentActionRequired),
+            "invoice.payment_attempt_required" => Ok(InvoicePaymentAttemptRequired),
             "invoice.payment_failed" => Ok(InvoicePaymentFailed),
             "invoice.payment_succeeded" => Ok(InvoicePaymentSucceeded),
             "invoice.sent" => Ok(InvoiceSent),

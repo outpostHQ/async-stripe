@@ -55,7 +55,6 @@ const _: () = {
             Ok(match k {
                 "network_code" => Deserialize::begin(&mut self.network_code),
                 "reason" => Deserialize::begin(&mut self.reason),
-
                 _ => <dyn Visitor>::ignore(),
             })
         }
@@ -97,7 +96,6 @@ const _: () = {
                 match k.as_str() {
                     "network_code" => b.network_code = FromValueOpt::from_value(v),
                     "reason" => b.reason = FromValueOpt::from_value(v),
-
                     _ => {}
                 }
             }
@@ -221,6 +219,7 @@ pub enum PaymentMethodUsBankAccountBlockedReason {
     BankAccountRestricted,
     BankAccountUnusable,
     DebitNotAuthorized,
+    TokenizedAccountNumberDeactivated,
 }
 impl PaymentMethodUsBankAccountBlockedReason {
     pub fn as_str(self) -> &'static str {
@@ -232,6 +231,7 @@ impl PaymentMethodUsBankAccountBlockedReason {
             BankAccountRestricted => "bank_account_restricted",
             BankAccountUnusable => "bank_account_unusable",
             DebitNotAuthorized => "debit_not_authorized",
+            TokenizedAccountNumberDeactivated => "tokenized_account_number_deactivated",
         }
     }
 }
@@ -247,6 +247,7 @@ impl std::str::FromStr for PaymentMethodUsBankAccountBlockedReason {
             "bank_account_restricted" => Ok(BankAccountRestricted),
             "bank_account_unusable" => Ok(BankAccountUnusable),
             "debit_not_authorized" => Ok(DebitNotAuthorized),
+            "tokenized_account_number_deactivated" => Ok(TokenizedAccountNumberDeactivated),
             _ => Err(stripe_types::StripeParseError),
         }
     }

@@ -5,7 +5,7 @@ pub struct AccountInvoicesSettings {
     /// The list of default Account Tax IDs to automatically include on invoices.
     /// Account Tax IDs get added when an invoice is finalized.
     pub default_account_tax_ids: Option<Vec<stripe_types::Expandable<stripe_shared::TaxId>>>,
-    /// Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+    /// Whether to save the payment method after a payment is completed for a one-time invoice or a subscription invoice when the customer already has a default payment method on the hosted invoice page.
     pub hosted_payment_method_save: Option<AccountInvoicesSettingsHostedPaymentMethodSave>,
 }
 #[doc(hidden)]
@@ -58,7 +58,6 @@ const _: () = {
                 "hosted_payment_method_save" => {
                     Deserialize::begin(&mut self.hosted_payment_method_save)
                 }
-
                 _ => <dyn Visitor>::ignore(),
             })
         }
@@ -109,7 +108,6 @@ const _: () = {
                     "hosted_payment_method_save" => {
                         b.hosted_payment_method_save = FromValueOpt::from_value(v)
                     }
-
                     _ => {}
                 }
             }
@@ -117,7 +115,7 @@ const _: () = {
         }
     }
 };
-/// Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+/// Whether to save the payment method after a payment is completed for a one-time invoice or a subscription invoice when the customer already has a default payment method on the hosted invoice page.
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub enum AccountInvoicesSettingsHostedPaymentMethodSave {
     Always,

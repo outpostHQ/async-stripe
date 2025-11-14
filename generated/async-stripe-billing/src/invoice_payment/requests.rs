@@ -5,6 +5,8 @@ use stripe_client_core::{
 #[derive(Clone, Debug, serde::Serialize)]
 struct ListInvoicePaymentBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
+    created: Option<stripe_types::RangeQueryTs>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     ending_before: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
@@ -22,6 +24,7 @@ struct ListInvoicePaymentBuilder {
 impl ListInvoicePaymentBuilder {
     fn new() -> Self {
         Self {
+            created: None,
             ending_before: None,
             expand: None,
             invoice: None,
@@ -38,25 +41,30 @@ pub struct ListInvoicePaymentPayment {
     /// Only return invoice payments associated by this payment intent ID.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payment_intent: Option<String>,
+    /// Only return invoice payments associated by this payment record ID.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_record: Option<String>,
     /// Only return invoice payments associated by this payment type.
     #[serde(rename = "type")]
     pub type_: ListInvoicePaymentPaymentType,
 }
 impl ListInvoicePaymentPayment {
     pub fn new(type_: impl Into<ListInvoicePaymentPaymentType>) -> Self {
-        Self { payment_intent: None, type_: type_.into() }
+        Self { payment_intent: None, payment_record: None, type_: type_.into() }
     }
 }
 /// Only return invoice payments associated by this payment type.
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub enum ListInvoicePaymentPaymentType {
     PaymentIntent,
+    PaymentRecord,
 }
 impl ListInvoicePaymentPaymentType {
     pub fn as_str(self) -> &'static str {
         use ListInvoicePaymentPaymentType::*;
         match self {
             PaymentIntent => "payment_intent",
+            PaymentRecord => "payment_record",
         }
     }
 }
@@ -67,6 +75,7 @@ impl std::str::FromStr for ListInvoicePaymentPaymentType {
         use ListInvoicePaymentPaymentType::*;
         match s {
             "payment_intent" => Ok(PaymentIntent),
+            "payment_record" => Ok(PaymentRecord),
             _ => Err(stripe_types::StripeParseError),
         }
     }
@@ -168,6 +177,11 @@ impl ListInvoicePayment {
     /// Construct a new `ListInvoicePayment`.
     pub fn new() -> Self {
         Self { inner: ListInvoicePaymentBuilder::new() }
+    }
+    /// Only return invoice payments that were created during the given date interval.
+    pub fn created(mut self, created: impl Into<stripe_types::RangeQueryTs>) -> Self {
+        self.inner.created = Some(created.into());
+        self
     }
     /// A cursor for use in pagination.
     /// `ending_before` is an object ID that defines your place in the list.

@@ -83,7 +83,7 @@ pub struct Invoice {
     /// * `subscription_cycle`: A subscription advanced into a new period.
     /// * `subscription_threshold`: A subscription reached a billing threshold.
     /// * `subscription_update`: A subscription was updated.
-    /// * `upcoming`: Reserved for simulated invoices, per the upcoming invoice endpoint.
+    /// * `upcoming`: Reserved for upcoming invoices created through the Create Preview Invoice API or when an `invoice.upcoming` event is generated for an upcoming invoice on a subscription.
     pub billing_reason: Option<InvoiceBillingReason>,
     /// Either `charge_automatically`, or `send_invoice`.
     /// When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer.
@@ -460,7 +460,6 @@ const _: () = {
                 }
                 "total_taxes" => Deserialize::begin(&mut self.total_taxes),
                 "webhooks_delivered_at" => Deserialize::begin(&mut self.webhooks_delivered_at),
-
                 _ => <dyn Visitor>::ignore(),
             })
         }
@@ -903,7 +902,6 @@ const _: () = {
                     "webhooks_delivered_at" => {
                         b.webhooks_delivered_at = FromValueOpt::from_value(v)
                     }
-
                     _ => {}
                 }
             }
@@ -1012,7 +1010,7 @@ impl serde::Serialize for Invoice {
 /// * `subscription_cycle`: A subscription advanced into a new period.
 /// * `subscription_threshold`: A subscription reached a billing threshold.
 /// * `subscription_update`: A subscription was updated.
-/// * `upcoming`: Reserved for simulated invoices, per the upcoming invoice endpoint.
+/// * `upcoming`: Reserved for upcoming invoices created through the Create Preview Invoice API or when an `invoice.upcoming` event is generated for an upcoming invoice on a subscription.
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub enum InvoiceBillingReason {
     AutomaticPendingInvoiceItemInvoice,

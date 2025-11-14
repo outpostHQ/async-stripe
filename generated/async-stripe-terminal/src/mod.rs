@@ -1,4 +1,5 @@
 #![recursion_limit = "256"]
+#![deny(clippy::large_stack_frames)]
 #![allow(clippy::large_enum_variant)]
 #![allow(rustdoc::broken_intra_doc_links)]
 #![allow(rustdoc::invalid_html_tags)]
@@ -28,6 +29,8 @@ pub use terminal_connection_token::types::*;
 pub mod terminal_connection_token;
 pub use terminal_location::types::*;
 pub mod terminal_location;
+pub use terminal_onboarding_link::types::*;
+pub mod terminal_onboarding_link;
 pub use terminal_reader::types::*;
 #[doc(hidden)]
 pub mod terminal_configuration_configuration_resource_currency_specific_config;
@@ -66,6 +69,14 @@ pub use terminal_configuration_configuration_resource_tipping::*;
 pub mod terminal_configuration_configuration_resource_wifi_config;
 #[doc(inline)]
 pub use terminal_configuration_configuration_resource_wifi_config::*;
+#[doc(hidden)]
+pub mod terminal_onboarding_link_apple_terms_and_conditions;
+#[doc(inline)]
+pub use terminal_onboarding_link_apple_terms_and_conditions::*;
+#[doc(hidden)]
+pub mod terminal_onboarding_link_link_options;
+#[doc(inline)]
+pub use terminal_onboarding_link_link_options::*;
 #[doc(hidden)]
 pub mod terminal_reader_reader_resource_cart;
 #[doc(inline)]

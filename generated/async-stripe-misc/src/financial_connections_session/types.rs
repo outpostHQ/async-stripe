@@ -9,7 +9,7 @@ pub struct FinancialConnectionsSession {
     /// The accounts that were collected as part of this Session.
     pub accounts: stripe_types::List<stripe_misc::FinancialConnectionsAccount>,
     /// A value that will be passed to the client to launch the authentication flow.
-    pub client_secret: String,
+    pub client_secret: Option<String>,
     pub filters: Option<stripe_misc::BankConnectionsResourceLinkAccountSessionFilters>,
     /// Unique identifier for the object.
     pub id: stripe_misc::FinancialConnectionsSessionId,
@@ -27,7 +27,7 @@ pub struct FinancialConnectionsSession {
 pub struct FinancialConnectionsSessionBuilder {
     account_holder: Option<Option<stripe_misc::BankConnectionsResourceAccountholder>>,
     accounts: Option<stripe_types::List<stripe_misc::FinancialConnectionsAccount>>,
-    client_secret: Option<String>,
+    client_secret: Option<Option<String>>,
     filters: Option<Option<stripe_misc::BankConnectionsResourceLinkAccountSessionFilters>>,
     id: Option<stripe_misc::FinancialConnectionsSessionId>,
     livemode: Option<bool>,
@@ -85,7 +85,6 @@ const _: () = {
                 "permissions" => Deserialize::begin(&mut self.permissions),
                 "prefetch" => Deserialize::begin(&mut self.prefetch),
                 "return_url" => Deserialize::begin(&mut self.return_url),
-
                 _ => <dyn Visitor>::ignore(),
             })
         }
@@ -175,7 +174,6 @@ const _: () = {
                     "permissions" => b.permissions = FromValueOpt::from_value(v),
                     "prefetch" => b.prefetch = FromValueOpt::from_value(v),
                     "return_url" => b.return_url = FromValueOpt::from_value(v),
-
                     _ => {}
                 }
             }
