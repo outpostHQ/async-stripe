@@ -19,7 +19,7 @@ jobs:
         working-directory: openapi
 
       - name: create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.REPO_SCOPED_TOKEN }}
           commit-message: Generate latest changes from OpenApi spec
@@ -31,7 +31,7 @@ jobs:
           reviewers: arlyon
       - name: email if failed
         if: failure()
-        uses: dawidd6/action-send-mail@v6
+        uses: dawidd6/action-send-mail@v7
         with:
           server_address: ${{ secrets.MAIL_SERVER }}
           server_port: 465
