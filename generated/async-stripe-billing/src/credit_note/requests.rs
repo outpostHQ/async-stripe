@@ -2,7 +2,7 @@ use stripe_client_core::{
     RequestBuilder, StripeBlockingClient, StripeClient, StripeMethod, StripeRequest,
 };
 
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct ListCreditNoteBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     created: Option<stripe_types::RangeQueryTs>,
@@ -127,7 +127,7 @@ impl StripeRequest for ListCreditNote {
         RequestBuilder::new(StripeMethod::Get, "/credit_notes").query(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct RetrieveCreditNoteBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
@@ -293,7 +293,7 @@ impl<'de> serde::Deserialize<'de> for PreviewCreditNoteEmailType {
 }
 /// Line items that make up the credit note.
 /// One of `amount`, `lines`, or `shipping_cost` must be provided.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct PreviewCreditNoteLines {
     /// The line item amount to credit.
     /// Only valid when `type` is `invoice_line_item`.
@@ -309,14 +309,16 @@ pub struct PreviewCreditNoteLines {
     /// The line item quantity to credit.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub quantity: Option<u64>,
-    /// A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+    /// A list of up to 10 tax amounts for the credit note line item.
+    /// Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_amounts: Option<Vec<TaxAmountWithTaxRateParam>>,
     /// The tax rates which apply to the credit note line item.
-    /// Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+    /// Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_rates: Option<Vec<String>>,
-    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+    /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(rename = "type")]
     pub type_: PreviewCreditNoteLinesType,
     /// The integer unit amount in cents (or local equivalent) of the credit note line item.
@@ -344,7 +346,8 @@ impl PreviewCreditNoteLines {
         }
     }
 }
-/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+/// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
 #[derive(Clone, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PreviewCreditNoteLinesType {
@@ -406,7 +409,7 @@ impl<'de> serde::Deserialize<'de> for PreviewCreditNoteLinesType {
     }
 }
 /// Refunds to link to this credit note.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct PreviewCreditNoteRefunds {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     /// Defaults to the entire refund amount.
@@ -738,7 +741,7 @@ impl<'de> serde::Deserialize<'de> for PreviewLinesCreditNoteEmailType {
 }
 /// Line items that make up the credit note.
 /// One of `amount`, `lines`, or `shipping_cost` must be provided.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct PreviewLinesCreditNoteLines {
     /// The line item amount to credit.
     /// Only valid when `type` is `invoice_line_item`.
@@ -754,14 +757,16 @@ pub struct PreviewLinesCreditNoteLines {
     /// The line item quantity to credit.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub quantity: Option<u64>,
-    /// A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+    /// A list of up to 10 tax amounts for the credit note line item.
+    /// Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_amounts: Option<Vec<TaxAmountWithTaxRateParam>>,
     /// The tax rates which apply to the credit note line item.
-    /// Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+    /// Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_rates: Option<Vec<String>>,
-    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+    /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(rename = "type")]
     pub type_: PreviewLinesCreditNoteLinesType,
     /// The integer unit amount in cents (or local equivalent) of the credit note line item.
@@ -789,7 +794,8 @@ impl PreviewLinesCreditNoteLines {
         }
     }
 }
-/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+/// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
 #[derive(Clone, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PreviewLinesCreditNoteLinesType {
@@ -855,7 +861,7 @@ impl<'de> serde::Deserialize<'de> for PreviewLinesCreditNoteLinesType {
     }
 }
 /// Refunds to link to this credit note.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct PreviewLinesCreditNoteRefunds {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     /// Defaults to the entire refund amount.
@@ -1202,7 +1208,7 @@ impl<'de> serde::Deserialize<'de> for CreateCreditNoteEmailType {
 }
 /// Line items that make up the credit note.
 /// One of `amount`, `lines`, or `shipping_cost` must be provided.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateCreditNoteLines {
     /// The line item amount to credit.
     /// Only valid when `type` is `invoice_line_item`.
@@ -1218,14 +1224,16 @@ pub struct CreateCreditNoteLines {
     /// The line item quantity to credit.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub quantity: Option<u64>,
-    /// A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+    /// A list of up to 10 tax amounts for the credit note line item.
+    /// Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_amounts: Option<Vec<TaxAmountWithTaxRateParam>>,
     /// The tax rates which apply to the credit note line item.
-    /// Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+    /// Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_rates: Option<Vec<String>>,
-    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+    /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     #[serde(rename = "type")]
     pub type_: CreateCreditNoteLinesType,
     /// The integer unit amount in cents (or local equivalent) of the credit note line item.
@@ -1253,7 +1261,8 @@ impl CreateCreditNoteLines {
         }
     }
 }
-/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+/// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
+/// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
 #[derive(Clone, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CreateCreditNoteLinesType {
@@ -1315,7 +1324,7 @@ impl<'de> serde::Deserialize<'de> for CreateCreditNoteLinesType {
     }
 }
 /// Refunds to link to this credit note.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateCreditNoteRefunds {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     /// Defaults to the entire refund amount.
@@ -1609,7 +1618,7 @@ impl StripeRequest for UpdateCreditNote {
         RequestBuilder::new(StripeMethod::Post, format!("/credit_notes/{id}")).form(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct VoidCreditNoteCreditNoteBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
@@ -1665,7 +1674,7 @@ impl StripeRequest for VoidCreditNoteCreditNote {
     }
 }
 
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct TaxAmountWithTaxRateParam {
     /// The amount, in cents (or local equivalent), of the tax.
     pub amount: i64,
@@ -1688,7 +1697,7 @@ impl TaxAmountWithTaxRateParam {
         }
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct PaymentRecordRefundParams {
     /// The ID of the PaymentRecord with the refund to link to this credit note.
     pub payment_record: String,
@@ -1701,7 +1710,7 @@ impl PaymentRecordRefundParams {
         Self { payment_record: payment_record.into(), refund_group: refund_group.into() }
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreditNoteShippingCost {
     /// The ID of the shipping rate to use for this order.
     #[serde(skip_serializing_if = "Option::is_none")]

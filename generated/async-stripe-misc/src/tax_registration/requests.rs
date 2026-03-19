@@ -2,7 +2,7 @@ use stripe_client_core::{
     RequestBuilder, StripeBlockingClient, StripeClient, StripeMethod, StripeRequest,
 };
 
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct ListTaxRegistrationBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     ending_before: Option<String>,
@@ -164,7 +164,7 @@ impl StripeRequest for ListTaxRegistration {
         RequestBuilder::new(StripeMethod::Get, "/tax/registrations").query(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct RetrieveTaxRegistrationBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
@@ -218,7 +218,7 @@ impl StripeRequest for RetrieveTaxRegistration {
             .query(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct CreateTaxRegistrationBuilder {
     active_from: CreateTaxRegistrationActiveFrom,
     country: String,
@@ -245,7 +245,7 @@ impl CreateTaxRegistrationBuilder {
 }
 /// Time at which the Tax Registration becomes active.
 /// It can be either `now` to indicate the current time, or a future timestamp measured in seconds since the Unix epoch.
-#[derive(Copy, Clone, Debug, serde::Serialize)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, serde::Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum CreateTaxRegistrationActiveFrom {
     Now,
@@ -253,7 +253,7 @@ pub enum CreateTaxRegistrationActiveFrom {
     Timestamp(stripe_types::Timestamp),
 }
 /// Specific options for a registration in the specified `country`.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptions {
     /// Options for the registration in AE.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -421,6 +421,9 @@ pub struct CreateTaxRegistrationCountryOptions {
     /// Options for the registration in LA.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub la: Option<CreateTaxRegistrationCountryOptionsLa>,
+    /// Options for the registration in LK.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lk: Option<CreateTaxRegistrationCountryOptionsLk>,
     /// Options for the registration in LT.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lt: Option<CreateTaxRegistrationCountryOptionsLt>,
@@ -615,6 +618,7 @@ impl CreateTaxRegistrationCountryOptions {
             kr: None,
             kz: None,
             la: None,
+            lk: None,
             lt: None,
             lu: None,
             lv: None,
@@ -669,7 +673,7 @@ impl Default for CreateTaxRegistrationCountryOptions {
     }
 }
 /// Options for the registration in AE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -684,7 +688,7 @@ impl CreateTaxRegistrationCountryOptionsAe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAeStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -831,7 +835,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAeType 
     }
 }
 /// Options for the registration in AL.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAl {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -846,7 +850,7 @@ impl CreateTaxRegistrationCountryOptionsAl {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAlStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -993,7 +997,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAlType 
     }
 }
 /// Options for the registration in AM.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAm {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -1067,7 +1071,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAmType 
     }
 }
 /// Options for the registration in AO.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAo {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1082,7 +1086,7 @@ impl CreateTaxRegistrationCountryOptionsAo {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAoStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1229,7 +1233,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAoType 
     }
 }
 /// Options for the registration in AT.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1244,7 +1248,7 @@ impl CreateTaxRegistrationCountryOptionsAt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAtStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsAtStandardPlaceOfSupplyScheme,
@@ -1400,7 +1404,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAtType 
     }
 }
 /// Options for the registration in AU.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAu {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1415,7 +1419,7 @@ impl CreateTaxRegistrationCountryOptionsAu {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAuStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1562,7 +1566,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAuType 
     }
 }
 /// Options for the registration in AW.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAw {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1577,7 +1581,7 @@ impl CreateTaxRegistrationCountryOptionsAw {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAwStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1724,7 +1728,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAwType 
     }
 }
 /// Options for the registration in AZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsAz {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -1798,7 +1802,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsAzType 
     }
 }
 /// Options for the registration in BA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBa {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1813,7 +1817,7 @@ impl CreateTaxRegistrationCountryOptionsBa {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBaStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1960,7 +1964,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBaType 
     }
 }
 /// Options for the registration in BB.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBb {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1975,7 +1979,7 @@ impl CreateTaxRegistrationCountryOptionsBb {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBbStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2122,7 +2126,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBbType 
     }
 }
 /// Options for the registration in BD.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBd {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2137,7 +2141,7 @@ impl CreateTaxRegistrationCountryOptionsBd {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBdStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2284,7 +2288,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBdType 
     }
 }
 /// Options for the registration in BE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2299,7 +2303,7 @@ impl CreateTaxRegistrationCountryOptionsBe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBeStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsBeStandardPlaceOfSupplyScheme,
@@ -2455,7 +2459,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBeType 
     }
 }
 /// Options for the registration in BF.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBf {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2470,7 +2474,7 @@ impl CreateTaxRegistrationCountryOptionsBf {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBfStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2617,7 +2621,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBfType 
     }
 }
 /// Options for the registration in BG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBg {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2632,7 +2636,7 @@ impl CreateTaxRegistrationCountryOptionsBg {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBgStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsBgStandardPlaceOfSupplyScheme,
@@ -2788,7 +2792,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBgType 
     }
 }
 /// Options for the registration in BH.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBh {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2803,7 +2807,7 @@ impl CreateTaxRegistrationCountryOptionsBh {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBhStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2950,7 +2954,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBhType 
     }
 }
 /// Options for the registration in BJ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBj {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3024,7 +3028,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBjType 
     }
 }
 /// Options for the registration in BS.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBs {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3039,7 +3043,7 @@ impl CreateTaxRegistrationCountryOptionsBs {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBsStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3186,7 +3190,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsBsType 
     }
 }
 /// Options for the registration in BY.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsBy {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3260,7 +3264,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsByType 
     }
 }
 /// Options for the registration in CA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCa {
     /// Options for the provincial tax registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3275,7 +3279,7 @@ impl CreateTaxRegistrationCountryOptionsCa {
     }
 }
 /// Options for the provincial tax registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCaProvinceStandard {
     /// Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     pub province: String,
@@ -3354,7 +3358,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCaType 
     }
 }
 /// Options for the registration in CD.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCd {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3369,7 +3373,7 @@ impl CreateTaxRegistrationCountryOptionsCd {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCdStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3516,7 +3520,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCdType 
     }
 }
 /// Options for the registration in CH.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCh {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3531,7 +3535,7 @@ impl CreateTaxRegistrationCountryOptionsCh {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsChStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3678,7 +3682,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsChType 
     }
 }
 /// Options for the registration in CL.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCl {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3752,7 +3756,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsClType 
     }
 }
 /// Options for the registration in CM.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCm {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3826,7 +3830,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCmType 
     }
 }
 /// Options for the registration in CO.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCo {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3900,7 +3904,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCoType 
     }
 }
 /// Options for the registration in CR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCr {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -3974,7 +3978,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCrType 
     }
 }
 /// Options for the registration in CV.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCv {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -4048,7 +4052,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCvType 
     }
 }
 /// Options for the registration in CY.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCy {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -4063,7 +4067,7 @@ impl CreateTaxRegistrationCountryOptionsCy {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCyStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsCyStandardPlaceOfSupplyScheme,
@@ -4219,7 +4223,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCyType 
     }
 }
 /// Options for the registration in CZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCz {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -4234,7 +4238,7 @@ impl CreateTaxRegistrationCountryOptionsCz {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsCzStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsCzStandardPlaceOfSupplyScheme,
@@ -4390,7 +4394,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsCzType 
     }
 }
 /// Options for the registration in DE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsDe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -4405,7 +4409,7 @@ impl CreateTaxRegistrationCountryOptionsDe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsDeStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsDeStandardPlaceOfSupplyScheme,
@@ -4561,7 +4565,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsDeType 
     }
 }
 /// Options for the registration in DK.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsDk {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -4576,7 +4580,7 @@ impl CreateTaxRegistrationCountryOptionsDk {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsDkStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsDkStandardPlaceOfSupplyScheme,
@@ -4732,7 +4736,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsDkType 
     }
 }
 /// Options for the registration in EC.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEc {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -4806,7 +4810,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsEcType 
     }
 }
 /// Options for the registration in EE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -4821,7 +4825,7 @@ impl CreateTaxRegistrationCountryOptionsEe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEeStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsEeStandardPlaceOfSupplyScheme,
@@ -4977,7 +4981,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsEeType 
     }
 }
 /// Options for the registration in EG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEg {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -5051,7 +5055,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsEgType 
     }
 }
 /// Options for the registration in ES.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEs {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5066,7 +5070,7 @@ impl CreateTaxRegistrationCountryOptionsEs {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEsStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsEsStandardPlaceOfSupplyScheme,
@@ -5222,7 +5226,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsEsType 
     }
 }
 /// Options for the registration in ET.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5237,7 +5241,7 @@ impl CreateTaxRegistrationCountryOptionsEt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsEtStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5384,7 +5388,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsEtType 
     }
 }
 /// Options for the registration in FI.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsFi {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5399,7 +5403,7 @@ impl CreateTaxRegistrationCountryOptionsFi {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsFiStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsFiStandardPlaceOfSupplyScheme,
@@ -5555,7 +5559,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsFiType 
     }
 }
 /// Options for the registration in FR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsFr {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5570,7 +5574,7 @@ impl CreateTaxRegistrationCountryOptionsFr {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsFrStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsFrStandardPlaceOfSupplyScheme,
@@ -5726,7 +5730,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsFrType 
     }
 }
 /// Options for the registration in GB.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGb {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5741,7 +5745,7 @@ impl CreateTaxRegistrationCountryOptionsGb {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGbStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5888,7 +5892,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsGbType 
     }
 }
 /// Options for the registration in GE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGe {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -5962,7 +5966,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsGeType 
     }
 }
 /// Options for the registration in GN.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGn {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -5977,7 +5981,7 @@ impl CreateTaxRegistrationCountryOptionsGn {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGnStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6124,7 +6128,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsGnType 
     }
 }
 /// Options for the registration in GR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGr {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6139,7 +6143,7 @@ impl CreateTaxRegistrationCountryOptionsGr {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsGrStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsGrStandardPlaceOfSupplyScheme,
@@ -6295,7 +6299,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsGrType 
     }
 }
 /// Options for the registration in HR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsHr {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6310,7 +6314,7 @@ impl CreateTaxRegistrationCountryOptionsHr {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsHrStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsHrStandardPlaceOfSupplyScheme,
@@ -6466,7 +6470,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsHrType 
     }
 }
 /// Options for the registration in HU.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsHu {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6481,7 +6485,7 @@ impl CreateTaxRegistrationCountryOptionsHu {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsHuStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsHuStandardPlaceOfSupplyScheme,
@@ -6637,7 +6641,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsHuType 
     }
 }
 /// Options for the registration in ID.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsId {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -6711,7 +6715,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsIdType 
     }
 }
 /// Options for the registration in IE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6726,7 +6730,7 @@ impl CreateTaxRegistrationCountryOptionsIe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIeStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsIeStandardPlaceOfSupplyScheme,
@@ -6882,7 +6886,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsIeType 
     }
 }
 /// Options for the registration in IN.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIn {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -6956,7 +6960,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsInType 
     }
 }
 /// Options for the registration in IS.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIs {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -6971,7 +6975,7 @@ impl CreateTaxRegistrationCountryOptionsIs {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIsStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7118,7 +7122,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsIsType 
     }
 }
 /// Options for the registration in IT.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsIt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7133,7 +7137,7 @@ impl CreateTaxRegistrationCountryOptionsIt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsItStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsItStandardPlaceOfSupplyScheme,
@@ -7289,7 +7293,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsItType 
     }
 }
 /// Options for the registration in JP.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsJp {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7304,7 +7308,7 @@ impl CreateTaxRegistrationCountryOptionsJp {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsJpStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7451,7 +7455,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsJpType 
     }
 }
 /// Options for the registration in KE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsKe {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7525,7 +7529,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsKeType 
     }
 }
 /// Options for the registration in KG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsKg {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7599,7 +7603,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsKgType 
     }
 }
 /// Options for the registration in KH.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsKh {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7673,7 +7677,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsKhType 
     }
 }
 /// Options for the registration in KR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsKr {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7747,7 +7751,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsKrType 
     }
 }
 /// Options for the registration in KZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsKz {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7821,7 +7825,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsKzType 
     }
 }
 /// Options for the registration in LA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLa {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -7894,8 +7898,82 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsLaType 
         Ok(Self::from_str(&s).expect("infallible"))
     }
 }
+/// Options for the registration in LK.
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
+pub struct CreateTaxRegistrationCountryOptionsLk {
+    /// Type of registration to be created in `country`.
+    #[serde(rename = "type")]
+    pub type_: CreateTaxRegistrationCountryOptionsLkType,
+}
+impl CreateTaxRegistrationCountryOptionsLk {
+    pub fn new(type_: impl Into<CreateTaxRegistrationCountryOptionsLkType>) -> Self {
+        Self { type_: type_.into() }
+    }
+}
+/// Type of registration to be created in `country`.
+#[derive(Clone, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum CreateTaxRegistrationCountryOptionsLkType {
+    Simplified,
+    /// An unrecognized value from Stripe. Should not be used as a request parameter.
+    Unknown(String),
+}
+impl CreateTaxRegistrationCountryOptionsLkType {
+    pub fn as_str(&self) -> &str {
+        use CreateTaxRegistrationCountryOptionsLkType::*;
+        match self {
+            Simplified => "simplified",
+            Unknown(v) => v,
+        }
+    }
+}
+
+impl std::str::FromStr for CreateTaxRegistrationCountryOptionsLkType {
+    type Err = std::convert::Infallible;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use CreateTaxRegistrationCountryOptionsLkType::*;
+        match s {
+            "simplified" => Ok(Simplified),
+            v => {
+                tracing::warn!(
+                    "Unknown value '{}' for enum '{}'",
+                    v,
+                    "CreateTaxRegistrationCountryOptionsLkType"
+                );
+                Ok(Unknown(v.to_owned()))
+            }
+        }
+    }
+}
+impl std::fmt::Display for CreateTaxRegistrationCountryOptionsLkType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+
+impl std::fmt::Debug for CreateTaxRegistrationCountryOptionsLkType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+impl serde::Serialize for CreateTaxRegistrationCountryOptionsLkType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(self.as_str())
+    }
+}
+#[cfg(feature = "deserialize")]
+impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsLkType {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        use std::str::FromStr;
+        let s: std::borrow::Cow<'de, str> = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str(&s).expect("infallible"))
+    }
+}
 /// Options for the registration in LT.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7910,7 +7988,7 @@ impl CreateTaxRegistrationCountryOptionsLt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLtStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsLtStandardPlaceOfSupplyScheme,
@@ -8066,7 +8144,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsLtType 
     }
 }
 /// Options for the registration in LU.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLu {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8081,7 +8159,7 @@ impl CreateTaxRegistrationCountryOptionsLu {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLuStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsLuStandardPlaceOfSupplyScheme,
@@ -8237,7 +8315,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsLuType 
     }
 }
 /// Options for the registration in LV.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLv {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8252,7 +8330,7 @@ impl CreateTaxRegistrationCountryOptionsLv {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsLvStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsLvStandardPlaceOfSupplyScheme,
@@ -8408,7 +8486,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsLvType 
     }
 }
 /// Options for the registration in MA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMa {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -8482,7 +8560,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMaType 
     }
 }
 /// Options for the registration in MD.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMd {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -8556,7 +8634,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMdType 
     }
 }
 /// Options for the registration in ME.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8571,7 +8649,7 @@ impl CreateTaxRegistrationCountryOptionsMe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMeStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8718,7 +8796,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMeType 
     }
 }
 /// Options for the registration in MK.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMk {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8733,7 +8811,7 @@ impl CreateTaxRegistrationCountryOptionsMk {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMkStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8880,7 +8958,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMkType 
     }
 }
 /// Options for the registration in MR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMr {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8895,7 +8973,7 @@ impl CreateTaxRegistrationCountryOptionsMr {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMrStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9042,7 +9120,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMrType 
     }
 }
 /// Options for the registration in MT.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9057,7 +9135,7 @@ impl CreateTaxRegistrationCountryOptionsMt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMtStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsMtStandardPlaceOfSupplyScheme,
@@ -9213,7 +9291,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMtType 
     }
 }
 /// Options for the registration in MX.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMx {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -9287,7 +9365,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMxType 
     }
 }
 /// Options for the registration in MY.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsMy {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -9361,7 +9439,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsMyType 
     }
 }
 /// Options for the registration in NG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNg {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -9435,7 +9513,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsNgType 
     }
 }
 /// Options for the registration in NL.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNl {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9450,7 +9528,7 @@ impl CreateTaxRegistrationCountryOptionsNl {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNlStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsNlStandardPlaceOfSupplyScheme,
@@ -9606,7 +9684,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsNlType 
     }
 }
 /// Options for the registration in NO.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNo {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9621,7 +9699,7 @@ impl CreateTaxRegistrationCountryOptionsNo {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNoStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9768,7 +9846,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsNoType 
     }
 }
 /// Options for the registration in NP.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNp {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -9842,7 +9920,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsNpType 
     }
 }
 /// Options for the registration in NZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNz {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -9857,7 +9935,7 @@ impl CreateTaxRegistrationCountryOptionsNz {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsNzStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10004,7 +10082,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsNzType 
     }
 }
 /// Options for the registration in OM.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsOm {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10019,7 +10097,7 @@ impl CreateTaxRegistrationCountryOptionsOm {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsOmStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10166,7 +10244,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsOmType 
     }
 }
 /// Options for the registration in PE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPe {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -10240,7 +10318,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsPeType 
     }
 }
 /// Options for the registration in PH.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPh {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -10314,7 +10392,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsPhType 
     }
 }
 /// Options for the registration in PL.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPl {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10329,7 +10407,7 @@ impl CreateTaxRegistrationCountryOptionsPl {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPlStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsPlStandardPlaceOfSupplyScheme,
@@ -10485,7 +10563,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsPlType 
     }
 }
 /// Options for the registration in PT.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPt {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10500,7 +10578,7 @@ impl CreateTaxRegistrationCountryOptionsPt {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsPtStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsPtStandardPlaceOfSupplyScheme,
@@ -10656,7 +10734,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsPtType 
     }
 }
 /// Options for the registration in RO.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsRo {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10671,7 +10749,7 @@ impl CreateTaxRegistrationCountryOptionsRo {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsRoStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsRoStandardPlaceOfSupplyScheme,
@@ -10827,7 +10905,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsRoType 
     }
 }
 /// Options for the registration in RS.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsRs {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10842,7 +10920,7 @@ impl CreateTaxRegistrationCountryOptionsRs {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsRsStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -10989,7 +11067,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsRsType 
     }
 }
 /// Options for the registration in RU.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsRu {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -11063,7 +11141,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsRuType 
     }
 }
 /// Options for the registration in SA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSa {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -11137,7 +11215,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSaType 
     }
 }
 /// Options for the registration in SE.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSe {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11152,7 +11230,7 @@ impl CreateTaxRegistrationCountryOptionsSe {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSeStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsSeStandardPlaceOfSupplyScheme,
@@ -11308,7 +11386,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSeType 
     }
 }
 /// Options for the registration in SG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSg {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11323,7 +11401,7 @@ impl CreateTaxRegistrationCountryOptionsSg {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSgStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11470,7 +11548,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSgType 
     }
 }
 /// Options for the registration in SI.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSi {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11485,7 +11563,7 @@ impl CreateTaxRegistrationCountryOptionsSi {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSiStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsSiStandardPlaceOfSupplyScheme,
@@ -11641,7 +11719,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSiType 
     }
 }
 /// Options for the registration in SK.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSk {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11656,7 +11734,7 @@ impl CreateTaxRegistrationCountryOptionsSk {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSkStandard {
     /// Place of supply scheme used in an EU standard registration.
     pub place_of_supply_scheme: CreateTaxRegistrationCountryOptionsSkStandardPlaceOfSupplyScheme,
@@ -11812,7 +11890,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSkType 
     }
 }
 /// Options for the registration in SN.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSn {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -11886,7 +11964,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSnType 
     }
 }
 /// Options for the registration in SR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSr {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -11901,7 +11979,7 @@ impl CreateTaxRegistrationCountryOptionsSr {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsSrStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -12048,7 +12126,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsSrType 
     }
 }
 /// Options for the registration in TH.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsTh {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12122,7 +12200,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsThType 
     }
 }
 /// Options for the registration in TJ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsTj {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12196,7 +12274,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsTjType 
     }
 }
 /// Options for the registration in TR.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsTr {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12270,7 +12348,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsTrType 
     }
 }
 /// Options for the registration in TW.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsTw {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12344,7 +12422,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsTwType 
     }
 }
 /// Options for the registration in TZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsTz {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12418,7 +12496,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsTzType 
     }
 }
 /// Options for the registration in UA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUa {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12492,7 +12570,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsUaType 
     }
 }
 /// Options for the registration in UG.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUg {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -12566,7 +12644,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsUgType 
     }
 }
 /// Options for the registration in US.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUs {
     /// Options for the local amusement tax registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -12598,10 +12676,10 @@ impl CreateTaxRegistrationCountryOptionsUs {
     }
 }
 /// Options for the local amusement tax registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUsLocalAmusementTax {
     /// A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
-    /// Supported FIPS codes are: `14000` (Chicago), `02154` (Arlington Heights), `06613` (Bloomington), `10906` (Campton Hills), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), and `68081` (Schiller Park).
+    /// Supported FIPS codes are: `02154` (Arlington Heights), `05248` (Bensenville), `06613` (Bloomington), `10906` (Campton Hills), `14000` (Chicago), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), `64421` (Riverside), `65806` (Roselle), and `68081` (Schiller Park).
     pub jurisdiction: String,
 }
 impl CreateTaxRegistrationCountryOptionsUsLocalAmusementTax {
@@ -12610,7 +12688,7 @@ impl CreateTaxRegistrationCountryOptionsUsLocalAmusementTax {
     }
 }
 /// Options for the local lease tax registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUsLocalLeaseTax {
     /// A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
     /// Supported FIPS codes are: `14000` (Chicago).
@@ -12622,7 +12700,7 @@ impl CreateTaxRegistrationCountryOptionsUsLocalLeaseTax {
     }
 }
 /// Options for the state sales tax registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUsStateSalesTax {
     /// Elections for the state sales tax registration.
     pub elections: Vec<CreateTaxRegistrationCountryOptionsUsStateSalesTaxElections>,
@@ -12635,7 +12713,7 @@ impl CreateTaxRegistrationCountryOptionsUsStateSalesTax {
     }
 }
 /// Elections for the state sales tax registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUsStateSalesTaxElections {
     /// A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
     /// Supported FIPS codes are: `003` (Allegheny County) and `60000` (Philadelphia City).
@@ -12797,7 +12875,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsUsType 
     }
 }
 /// Options for the registration in UY.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUy {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -12812,7 +12890,7 @@ impl CreateTaxRegistrationCountryOptionsUy {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUyStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -12959,7 +13037,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsUyType 
     }
 }
 /// Options for the registration in UZ.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsUz {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -13033,7 +13111,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsUzType 
     }
 }
 /// Options for the registration in VN.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsVn {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -13107,7 +13185,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsVnType 
     }
 }
 /// Options for the registration in ZA.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsZa {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -13122,7 +13200,7 @@ impl CreateTaxRegistrationCountryOptionsZa {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsZaStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -13269,7 +13347,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsZaType 
     }
 }
 /// Options for the registration in ZM.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsZm {
     /// Type of registration to be created in `country`.
     #[serde(rename = "type")]
@@ -13343,7 +13421,7 @@ impl<'de> serde::Deserialize<'de> for CreateTaxRegistrationCountryOptionsZmType 
     }
 }
 /// Options for the registration in ZW.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsZw {
     /// Options for the standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -13358,7 +13436,7 @@ impl CreateTaxRegistrationCountryOptionsZw {
     }
 }
 /// Options for the standard registration.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreateTaxRegistrationCountryOptionsZwStandard {
     /// Place of supply scheme used in an standard registration.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -13562,7 +13640,7 @@ impl StripeRequest for CreateTaxRegistration {
         RequestBuilder::new(StripeMethod::Post, "/tax/registrations").form(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct UpdateTaxRegistrationBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     active_from: Option<UpdateTaxRegistrationActiveFrom>,
@@ -13578,7 +13656,7 @@ impl UpdateTaxRegistrationBuilder {
 }
 /// Time at which the registration becomes active.
 /// It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
-#[derive(Copy, Clone, Debug, serde::Serialize)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, serde::Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UpdateTaxRegistrationActiveFrom {
     Now,
@@ -13588,7 +13666,7 @@ pub enum UpdateTaxRegistrationActiveFrom {
 /// If set, the registration stops being active at this time.
 /// If not set, the registration will be active indefinitely.
 /// It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
-#[derive(Copy, Clone, Debug, serde::Serialize)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, serde::Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UpdateTaxRegistrationExpiresAt {
     Now,

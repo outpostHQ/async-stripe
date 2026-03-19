@@ -2,7 +2,7 @@ use stripe_client_core::{
     RequestBuilder, StripeBlockingClient, StripeClient, StripeMethod, StripeRequest,
 };
 
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct ListPromotionCodeBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     active: Option<bool>,
@@ -144,7 +144,7 @@ impl StripeRequest for ListPromotionCode {
         RequestBuilder::new(StripeMethod::Get, "/promotion_codes").query(&self.inner)
     }
 }
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 struct RetrievePromotionCodeBuilder {
     #[serde(skip_serializing_if = "Option::is_none")]
     expand: Option<Vec<String>>,
@@ -238,7 +238,7 @@ impl CreatePromotionCodeBuilder {
     }
 }
 /// The promotion referenced by this promotion code.
-#[derive(Clone, Debug, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CreatePromotionCodePromotion {
     /// If promotion `type` is `coupon`, the coupon for this promotion code.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -364,7 +364,7 @@ impl CreatePromotionCode {
     }
     /// The customer-facing code.
     /// Regardless of case, this code must be unique across all active promotion codes for a specific customer.
-    /// Valid characters are lower case letters (a-z), upper case letters (A-Z), and digits (0-9).
+    /// Valid characters are lower case letters (a-z), upper case letters (A-Z), digits (0-9), and dashes (-).
     ///
     /// If left blank, we will generate one automatically.
     pub fn code(mut self, code: impl Into<String>) -> Self {
@@ -549,7 +549,7 @@ impl StripeRequest for UpdatePromotionCode {
     }
 }
 
-#[derive(Copy, Clone, Debug, serde::Serialize)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct CurrencyOption {
     /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100 or more to work).
     #[serde(skip_serializing_if = "Option::is_none")]
